@@ -1,0 +1,62 @@
+name: no-rescue-benchmark
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      appUrl:
+        description: "Reachable generated app URL"
+        required: false
+      builder:
+        description: "Entrant name"
+        required: false
+      promptId:
+        description: "Selected prompt ID, e.g. B1"
+        required: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run validate
+      - run: npm test
+      - run: npm run score:ship
+      - name: Prove critical failure exits NO_SHIP
+        run: |
+          set +e
+          npm run score:noship
+          code=$?
+          set -e
+          test "$code" -eq 1
+
+  browser-evidence:
+    if: github.event_name == 'workflow_dispatch' && inputs.appUrl != ''
+    runs-on: ubuntu-latest
+    env:
+      APP_URL: ${{ inputs.appUrl }}
+      BUILDER: ${{ inputs.builder }}
+      PROMPT_ID: ${{ inputs.promptId }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run evidence -- --project=chromium
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: no-rescue-evidence-${{ inputs.builder }}-${{ inputs.promptId }}
+          path: |
+            test-results/
+            playwright-report/
