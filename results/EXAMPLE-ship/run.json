@@ -1,0 +1,35 @@
+{
+  "builder": "example-builder",
+  "benchmarkVersion": "1.0",
+  "runDate": "2026-07-08",
+  "plan": "free",
+  "agentModelShown": "default-free-agent",
+  "frozenVersion": "product@2026-07-08",
+  "promptId": "B1",
+  "prompt": "Build an app for a small equipment rental company. They need to track each individual piece of equipment, reservations, pickups, returns, damage photos, deposits, and maintenance. An item that is already reserved or under maintenance shouldn't be available for another reservation.",
+  "initialBuild": "PASS",
+  "run": {
+    "messagesUsed": 5,
+    "correctionRounds": 1,
+    "buildErrors": 0,
+    "regressionsIntroduced": 0,
+    "creditsConsumed": null,
+    "freeQuotaExhausted": false
+  },
+  "scoring": {
+    "intentFidelity": 19,
+    "coreWorkflows": 23,
+    "correctionBurden": 15,
+    "changeResilience": 13,
+    "security": 14,
+    "accessibility": 4
+  },
+  "criticalFailures": [],
+  "evidence": {
+    "recording": "recording.webm",
+    "promptLog": "prompt-log.md",
+    "appUrl": "https://example.invalid",
+    "automatedTests": "playwright-report/",
+    "screenshots": ["screenshots/final.png"]
+  }
+}
