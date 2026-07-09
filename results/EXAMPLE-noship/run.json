@@ -1,0 +1,41 @@
+{
+  "builder": "example-builder",
+  "benchmarkVersion": "1.0",
+  "runDate": "2026-07-08",
+  "plan": "free",
+  "agentModelShown": "default-free-agent",
+  "frozenVersion": "product@2026-07-08",
+  "promptId": "C1",
+  "prompt": "Build a maintenance portal for a property management company. Tenants report problems and upload photos. Dispatchers assign technicians. Technicians add before-and-after photos and materials used. Property owners should only be able to see the properties they own.",
+  "initialBuild": "PASS",
+  "run": {
+    "messagesUsed": 4,
+    "correctionRounds": 0,
+    "buildErrors": 0,
+    "regressionsIntroduced": 0,
+    "creditsConsumed": null,
+    "freeQuotaExhausted": false
+  },
+  "scoring": {
+    "intentFidelity": 20,
+    "coreWorkflows": 25,
+    "correctionBurden": 20,
+    "changeResilience": 15,
+    "security": 5,
+    "accessibility": 5
+  },
+  "criticalFailures": [
+    {
+      "code": "cross_tenant_leakage",
+      "present": true,
+      "evidence": "Owner A could open Owner B's maintenance request by changing the request identifier in the URL."
+    }
+  ],
+  "evidence": {
+    "recording": "recording.webm",
+    "promptLog": "prompt-log.md",
+    "appUrl": "https://example.invalid",
+    "automatedTests": "playwright-report/",
+    "screenshots": ["screenshots/leak-proof.png"]
+  }
+}
