@@ -1,0 +1,13 @@
+{
+  "status": "UNCOMMITTED_FOR_SEASON_ZERO",
+  "note": "Before Season Zero begins, replace the placeholders below with a future public beacon that will occur only after entrants.frozen.json and prompts/pool.json are publicly committed. Do not backfill a beacon that already exists.",
+  "beacon": {
+    "type": "drand",
+    "round": "<future-round>",
+    "expectedPublishTime": "<future-iso-8601>",
+    "fallback": {
+      "type": "bitcoin-block",
+      "height": "<future-height>"
+    }
+  }
+}
