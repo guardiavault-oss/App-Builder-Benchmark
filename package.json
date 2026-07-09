@@ -5,6 +5,7 @@
   "type": "module",
   "description": "Independent adversarial benchmark for AI application builders.",
   "scripts": {
+    "demo": "node scripts/demo.mjs",
     "validate": "node scripts/validate-repo.mjs",
     "score:ship": "node scoring/score.mjs results/EXAMPLE-ship/run.json",
     "score:noship": "node scoring/score.mjs results/EXAMPLE-noship/run.json",
