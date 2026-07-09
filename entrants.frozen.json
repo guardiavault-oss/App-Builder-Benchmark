@@ -1,0 +1,13 @@
+{
+  "status": "DRAFT_BEFORE_SEASON_ZERO",
+  "note": "Freeze every entrant before the selection beacon exists. WholeStack's current candidate freeze is the public main commit that was verified before benchmark scaffolding.",
+  "entrants": [
+    {
+      "builder": "wholestack",
+      "kind": "open",
+      "frozenVersion": "d5a390573ec796156f3e9c9f8e61f58a3fc2004d",
+      "repo": "https://github.com/guardiavault-oss/vibeflo",
+      "observedDate": "2026-07-08"
+    }
+  ]
+}
