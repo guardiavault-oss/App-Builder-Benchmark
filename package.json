@@ -1,0 +1,24 @@
+{
+  "name": "no-rescue-benchmark",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Independent adversarial benchmark for AI application builders.",
+  "scripts": {
+    "validate": "node scripts/validate-repo.mjs",
+    "score:ship": "node scoring/score.mjs results/EXAMPLE-ship/run.json",
+    "score:noship": "node scoring/score.mjs results/EXAMPLE-noship/run.json",
+    "select:test": "node selection/select.mjs --beacon 000102030405060708090a0b0c0d0e0f --dry-run",
+    "test": "node --test scripts/*.test.mjs selection/*.test.mjs harness/*.test.mjs",
+    "evidence": "playwright test -c harness/playwright.config.mjs",
+    "contract": "node harness/contract-runner.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.1",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
