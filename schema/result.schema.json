@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://no-rescue.dev/schema/result.schema.json",
+  "title": "NO-RESCUE v1 run result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "builder",
+    "benchmarkVersion",
+    "runDate",
+    "plan",
+    "promptId",
+    "prompt",
+    "run",
+    "scoring",
+    "criticalFailures",
+    "evidence"
+  ],
+  "properties": {
+    "builder": { "type": "string", "minLength": 1 },
+    "benchmarkVersion": { "const": "1.0" },
+    "runDate": { "type": "string", "format": "date" },
+    "plan": { "type": "string", "minLength": 1 },
+    "agentModelShown": { "type": "string" },
+    "frozenVersion": { "type": "string" },
+    "promptId": { "type": "string", "pattern": "^[ABCD][123]$" },
+    "prompt": { "type": "string", "minLength": 1 },
+    "initialBuild": { "enum": ["PASS", "FAIL"] },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["messagesUsed", "correctionRounds", "buildErrors", "regressionsIntroduced", "freeQuotaExhausted"],
+      "properties": {
+        "startedAt": { "type": "string", "format": "date-time" },
+        "endedAt": { "type": "string", "format": "date-time" },
+        "messagesUsed": { "type": "integer", "minimum": 0 },
+        "correctionRounds": { "type": "integer", "minimum": 0 },
+        "buildErrors": { "type": "integer", "minimum": 0 },
+        "regressionsIntroduced": { "type": "integer", "minimum": 0 },
+        "creditsConsumed": { "anyOf": [{ "type": "number" }, { "type": "string" }, { "type": "null" }] },
+        "freeQuotaExhausted": { "type": "boolean" }
+      }
+    },
+    "scoring": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intentFidelity", "coreWorkflows", "correctionBurden", "changeResilience", "security", "accessibility"],
+      "properties": {
+        "intentFidelity": { "type": "integer", "minimum": 0, "maximum": 20 },
+        "coreWorkflows": { "type": "integer", "minimum": 0, "maximum": 25 },
+        "correctionBurden": { "type": "integer", "minimum": 0, "maximum": 20 },
+        "changeResilience": { "type": "integer", "minimum": 0, "maximum": 15 },
+        "security": { "type": "integer", "minimum": 0, "maximum": 15 },
+        "accessibility": { "type": "integer", "minimum": 0, "maximum": 5 }
+      }
+    },
+    "criticalFailures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "present", "evidence"],
+        "properties": {
+          "code": {
+            "enum": [
+              "cross_tenant_leakage",
+              "cross_user_leakage",
+              "authentication_bypass",
+              "unauthorized_destructive_mutation",
+              "fake_core_functionality",
+              "fundamental_wrong_product"
+            ]
+          },
+          "present": { "type": "boolean" },
+          "evidence": { "type": "string" }
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recording", "promptLog", "appUrl", "automatedTests"],
+      "properties": {
+        "recording": { "type": "string" },
+        "promptLog": { "type": "string" },
+        "appUrl": { "type": "string" },
+        "automatedTests": { "type": "string" },
+        "sourceCommit": { "type": "string" },
+        "screenshots": { "type": "array", "items": { "type": "string" } },
+        "securityReport": { "type": "string" }
+      }
+    }
+  }
+}
