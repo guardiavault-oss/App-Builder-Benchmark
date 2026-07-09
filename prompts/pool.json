@@ -1,0 +1,187 @@
+{
+  "poolVersion": "1.0",
+  "note": "Frozen 12-prompt pool. The actual Season Zero prompt in each category is selected by a future public beacon. Prompt text must be pasted verbatim for every builder.",
+  "selection": {
+    "algorithm": "selection/select.mjs",
+    "commit": "selection.commit.json",
+    "result": "selection.result.json"
+  },
+  "categories": {
+    "A": [
+      {
+        "id": "A1",
+        "category": "intent",
+        "title": "The Intent Trap — Thrift Operations",
+        "prompt": "Build me a SaaS for thrift stores that helps keep inventory, prices products with AI, and keeps track of stolen merchandise.",
+        "acceptanceChecks": [
+          "The primary product is internal thrift-store operations software, not a public storefront or marketplace.",
+          "Inventory items can be created and tracked.",
+          "The app exposes a pricing-recommendation workflow.",
+          "The app exposes a stolen-merchandise or theft-incident workflow.",
+          "No auto-recycling, VIN, OEM, vehicle-parts, salvage-yard, or unrelated Recycler OS concepts appear."
+        ],
+        "changeRequest": "Six weeks later, the store adds multiple locations. Each inventory item and theft incident must belong to a location, while company-wide managers can still see all locations. Add this without breaking existing single-location data."
+      },
+      {
+        "id": "A2",
+        "category": "intent",
+        "title": "The Actor Trap — Recruiting Operations",
+        "prompt": "Build software for a small recruiting agency to manage candidates, job openings, interview stages, client feedback, and placements.",
+        "acceptanceChecks": [
+          "The product is a recruiting workflow system, not a generic analytics dashboard or public job board.",
+          "Candidates and job openings are distinct entities.",
+          "A candidate can move through interview stages for a specific opening.",
+          "Client feedback is attached to the relevant candidate/opening process.",
+          "A placement can be recorded as an outcome."
+        ],
+        "changeRequest": "Six weeks later, one candidate may be considered for multiple openings at the same time, each with its own stage and feedback. Add this without duplicating the candidate record or breaking existing placements."
+      },
+      {
+        "id": "A3",
+        "category": "intent",
+        "title": "The Product-Type Trap — Novelist Studio",
+        "prompt": "Build a private workspace for novelists to plan characters, locations, scenes, chapters, timelines, and continuity notes while writing a book.",
+        "acceptanceChecks": [
+          "The product is a creation studio, not analytics software or a publishing marketplace.",
+          "Characters, locations, scenes, and chapters are modeled distinctly.",
+          "A writer can connect scenes to chapters and relevant characters/locations.",
+          "Timeline or continuity information can be tracked.",
+          "The primary flow supports creating and organizing story material."
+        ],
+        "changeRequest": "Six weeks later, writers need multiple alternate scene versions while only one version is canonical in the manuscript. Add versioning without losing existing scenes or continuity links."
+      }
+    ],
+    "B": [
+      {
+        "id": "B1",
+        "category": "state",
+        "title": "The State-Machine Trap — Equipment Rental",
+        "prompt": "Build an app for a small equipment rental company. They need to track each individual piece of equipment, reservations, pickups, returns, damage photos, deposits, and maintenance. An item that is already reserved or under maintenance shouldn't be available for another reservation.",
+        "acceptanceChecks": [
+          "Each physical asset is individually tracked.",
+          "An overlapping reservation for the same asset is rejected.",
+          "An asset under maintenance cannot be reserved.",
+          "Pickup and return change the asset/rental state coherently.",
+          "Damage photos and deposit information can be attached to the rental lifecycle."
+        ],
+        "changeRequest": "Six weeks later, some reservations contain multiple assets and customers may return only part of an order. Add partial returns without breaking single-asset reservations or allowing returned and still-out assets to share the wrong state."
+      },
+      {
+        "id": "B2",
+        "category": "state",
+        "title": "The Capacity Trap — Dog Grooming",
+        "prompt": "Build an app for a dog grooming business to manage pets, owners, groomers, appointment services, appointment status, notes, and vaccination requirements.",
+        "acceptanceChecks": [
+          "Pets and owners are distinct but linked.",
+          "Appointments are assigned to a groomer and service/time.",
+          "A groomer cannot be double-booked for overlapping appointments.",
+          "Appointment status changes coherently from scheduled through completion or cancellation.",
+          "Missing required vaccination information can block or visibly flag an appointment."
+        ],
+        "changeRequest": "Six weeks later, some services need two groomers simultaneously. Add multi-groomer appointments without allowing either groomer to be double-booked."
+      },
+      {
+        "id": "B3",
+        "category": "state",
+        "title": "The Inventory-Mutation Trap — Warehouse",
+        "prompt": "Build a warehouse operations app to receive stock, store inventory by bin, pick orders, pack shipments, adjust damaged stock, and keep an immutable movement history.",
+        "acceptanceChecks": [
+          "Receiving stock increases inventory in a specific bin.",
+          "Picking cannot reduce available inventory below zero.",
+          "Damaged-stock adjustments change availability with a reason.",
+          "Packing/shipping does not duplicate the same stock movement.",
+          "Inventory movement history is append-only from the user's workflow."
+        ],
+        "changeRequest": "Six weeks later, add stock transfers between bins and warehouses. The transfer must preserve total quantity and produce traceable outbound and inbound movement records."
+      }
+    ],
+    "C": [
+      {
+        "id": "C1",
+        "category": "authorization",
+        "title": "The Tenant-Isolation Trap — Property Maintenance",
+        "prompt": "Build a maintenance portal for a property management company. Tenants report problems and upload photos. Dispatchers assign technicians. Technicians add before-and-after photos and materials used. Property owners should only be able to see the properties they own.",
+        "acceptanceChecks": [
+          "Tenants can create maintenance requests for their property.",
+          "Dispatchers can assign technicians.",
+          "Technicians can add work evidence and materials used.",
+          "Owner A cannot read Owner B properties, requests, photos, or work records.",
+          "Changing a URL or direct object identifier does not bypass owner isolation."
+        ],
+        "changeRequest": "Six weeks later, one property may have multiple owners with different percentage interests. Add shared ownership while ensuring each owner sees only properties they actually own."
+      },
+      {
+        "id": "C2",
+        "category": "authorization",
+        "title": "The Role-Mutation Trap — Patient Records",
+        "prompt": "Build a small clinic portal where patients see their own appointments and documents, clinicians write visit notes, and front-desk staff schedule appointments but cannot edit clinical notes.",
+        "acceptanceChecks": [
+          "Patients can access only their own records.",
+          "Clinicians can create or edit clinical notes for authorized patients.",
+          "Front-desk staff can schedule appointments.",
+          "Front-desk staff cannot create, edit, or delete clinical notes.",
+          "Direct URLs or API-like requests do not bypass the role restriction."
+        ],
+        "changeRequest": "Six weeks later, add external specialists who may view one explicitly shared patient case for a limited time but may not browse other patients."
+      },
+      {
+        "id": "C3",
+        "category": "authorization",
+        "title": "The Organization Boundary Trap — Client Portal",
+        "prompt": "Build a B2B client portal where each customer company can see its own projects, invoices, files, and support requests. Internal account managers can see only the customer companies assigned to them.",
+        "acceptanceChecks": [
+          "Customer company A cannot access company B data.",
+          "Project, invoice, file, and support-request access follows company isolation.",
+          "Account managers see only assigned customer companies.",
+          "Direct-link navigation does not bypass assignment rules.",
+          "Unauthorized destructive actions are rejected rather than merely hidden in the UI."
+        ],
+        "changeRequest": "Six weeks later, temporarily reassign one customer company to a backup account manager. Add time-bounded delegated access without exposing any other customer companies."
+      }
+    ],
+    "D": [
+      {
+        "id": "D1",
+        "category": "change",
+        "title": "The Approval-Version Trap — Fabrication Portal",
+        "prompt": "Build a private client portal for a custom fabrication shop. Customers receive quotes, review drawing revisions, approve a specific revision, pay deposits, and track production. If the shop uploads a new drawing revision after approval, the old approval should no longer count as approval of the new revision.",
+        "acceptanceChecks": [
+          "Quotes and drawing revisions are distinct concepts.",
+          "Approval attaches to a specific drawing revision.",
+          "Uploading a newer revision does not inherit approval from the old revision.",
+          "Deposits and production tracking remain available.",
+          "The UI does not present an unapproved new revision as approved."
+        ],
+        "changeRequest": "Six weeks later, customers can partially approve a quote. They may approve fabrication for some line items while requesting revisions on others. Add this without breaking existing full approvals or old projects."
+      },
+      {
+        "id": "D2",
+        "category": "change",
+        "title": "The Subscription-Migration Trap — Membership SaaS",
+        "prompt": "Build a membership management app with plans, members, subscriptions, renewals, failed-payment follow-up, cancellations, and plan changes.",
+        "acceptanceChecks": [
+          "Members and plans are distinct.",
+          "Subscriptions have a coherent active/past-due/canceled lifecycle.",
+          "Failed payment follow-up is represented as a real workflow.",
+          "Cancellation does not silently erase historical subscription data.",
+          "Plan changes update the subscription rather than creating an unrelated duplicate member."
+        ],
+        "changeRequest": "Six weeks later, add scheduled plan changes that take effect on the next renewal date. Existing immediate plan changes and historical subscriptions must keep working."
+      },
+      {
+        "id": "D3",
+        "category": "change",
+        "title": "The Split-Workflow Trap — Legal Matters",
+        "prompt": "Build a legal case management app for a small firm to track clients, matters, deadlines, documents, time entries, invoices, and matter activity.",
+        "acceptanceChecks": [
+          "Clients and matters are distinct and linked.",
+          "Deadlines, documents, time entries, invoices, and activity attach to the correct matter.",
+          "Time entries can flow into billing without losing matter context.",
+          "The app supports active matter work rather than only a summary dashboard.",
+          "Matter history remains understandable after edits."
+        ],
+        "changeRequest": "Six weeks later, one matter may be split into two related matters while preserving shared historical documents and time entries without double-billing them. Add this without breaking existing unsplit matters."
+      }
+    ]
+  }
+}
